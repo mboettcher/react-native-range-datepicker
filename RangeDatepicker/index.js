@@ -7,10 +7,13 @@ import {
   FlatList,
   StyleSheet,
   Button,
+  Dimensions,
 } from 'react-native';
 import Month from './Month';
 // import styles from './styles';
 import moment from 'moment';
+
+const DEVICE_WIDTH = Dimensions.get('window').width;
 
 export default class RangeDatepicker extends Component {
 	constructor(props) {
@@ -53,6 +56,8 @@ export default class RangeDatepicker extends Component {
 		infoContainerStyle: {marginRight: 20, paddingHorizontal: 20, paddingVertical: 5, backgroundColor: 'green', borderRadius: 20, alignSelf: 'flex-end'},
 		showSelectionInfo: true,
 		showButton: true,
+		monthContainerHeight: DEVICE_WIDTH,
+		monthContainerWidth: DEVICE_WIDTH,
 	};
 
 
@@ -83,6 +88,8 @@ export default class RangeDatepicker extends Component {
 		infoContainerStyle: PropTypes.object,
 		showSelectionInfo: PropTypes.bool,
 		showButton: PropTypes.bool,
+		monthContainerHeight: PropTypes.number,
+		monthContainerWidth: PropTypes.number,
 	}
 
 	componentWillReceiveProps(nextProps) {
@@ -151,6 +158,20 @@ export default class RangeDatepicker extends Component {
 		}
 
 		return res;
+	}
+
+	getInitialScrollIndex() {
+
+		let { startDate } = this.state;
+
+		if(startDate && startDate != '') {
+
+			let currentDate = moment();
+
+			return Math.ceil(startDate.diff(currentDate, 'months', true)) //.diff gives the difference in months as a float therefore we need to round up it
+		}
+
+		return 0;
 	}
 
 	onReset(){
@@ -254,6 +275,10 @@ export default class RangeDatepicker extends Component {
 						}}
 						keyExtractor = { (item, index) => index.toString() }
 			            showsVerticalScrollIndicator={false}
+						initialScrollIndex={this.getInitialScrollIndex()}
+						getItemLayout={(data, index) => {
+							return {length: this.props.monthContainerHeight, offset: this.props.monthContainerHeight * index, index}
+						}}
 					/>
 
 					{
