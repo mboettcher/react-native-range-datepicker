@@ -168,7 +168,7 @@ export default class RangeDatepicker extends Component {
 
 			let currentDate = moment();
 
-			diff = startDate.month() - currentDate.month()
+			let diff = startDate.month() - currentDate.month()
 
 			if(diff >= 0)
 				return diff
