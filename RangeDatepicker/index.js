@@ -168,7 +168,10 @@ export default class RangeDatepicker extends Component {
 
 			let currentDate = moment();
 
-			return Math.ceil(startDate.diff(currentDate, 'months', true)) //.diff gives the difference in months as a float therefore we need to round up it
+			diff = startDate.month() - currentDate.month()
+
+			if(diff >= 0)
+				return diff
 		}
 
 		return 0;
