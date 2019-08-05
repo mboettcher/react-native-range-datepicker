@@ -93,7 +93,12 @@ export default class RangeDatepicker extends Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		this.setState({availableDates: nextProps.availableDates});
+		if(JSON.stringify(this.props.availableDates) != JSON.stringify(nextProps.availableDates))
+			this.setState({availableDates: nextProps.availableDates || null});
+		if(this.props.startDate != nextProps.startDate)
+			this.setState({startDate: nextProps.startDate && moment(nextProps.startDate, 'YYYYMMDD')});
+		if(this.props.untilDate != nextProps.untilDate)
+			this.setState({untilDate: nextProps.untilDate && moment(nextProps.untilDate, 'YYYYMMDD')});	
 	}
 
 	onSelectDate(date){
