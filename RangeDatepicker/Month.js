@@ -14,38 +14,38 @@ export default class Month extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 
-		if(nextProps.minDate != this.props.minDate)
+		if (nextProps.minDate != this.props.minDate)
 			return true;
 
-		if(nextProps.maxDate != this.props.maxDate)
+		if (nextProps.maxDate != this.props.maxDate)
 			return true;
 
-		if(nextProps.availableDates != this.props.availableDates)
+		if (nextProps.availableDates != this.props.availableDates)
 			return true;
 
-		if(nextProps.startDate && nextProps.startDate.format("YYYYMM") == nextProps.month)
+		if (nextProps.startDate && nextProps.startDate.format("YYYYMM") == nextProps.month)
 			return true;
 
-		if(nextProps.untilDate && nextProps.untilDate.format("YYYYMM") == nextProps.month)
+		if (nextProps.untilDate && nextProps.untilDate.format("YYYYMM") == nextProps.month)
 			return true;
 
-		if(this.props.startDate && this.props.startDate.format("YYYYMM") == nextProps.month)
+		if (this.props.startDate && this.props.startDate.format("YYYYMM") == nextProps.month)
 			return true;
 
-		if(this.props.untilDate && this.props.untilDate.format("YYYYMM") == nextProps.month)
+		if (this.props.untilDate && this.props.untilDate.format("YYYYMM") == nextProps.month)
 			return true;
 
-		if(nextProps.startDate && nextProps.untilDate && nextProps.startDate.format("YYYYMM") < nextProps.month && nextProps.untilDate.format("YYYYMM") > nextProps.month)
+		if (nextProps.startDate && nextProps.untilDate && nextProps.startDate.format("YYYYMM") < nextProps.month && nextProps.untilDate.format("YYYYMM") > nextProps.month)
 			return true;
 
-		if(this.props.untilDate && this.props.startDate && this.props.startDate.format("YYYYMM") < nextProps.month && this.props.untilDate.format("YYYYMM") > nextProps.month)
+		if (this.props.untilDate && this.props.startDate && this.props.startDate.format("YYYYMM") < nextProps.month && this.props.untilDate.format("YYYYMM") > nextProps.month)
 			return true;
 
 		return false;
 	}
 
 
-	getDayStack(month){
+	getDayStack(month) {
 		let res = [];
 		let currMonth = moment(month).month(); //get this month
 		let currDate = moment(month).startOf("month"); //get first day in this month
@@ -53,40 +53,39 @@ export default class Month extends React.Component {
 		let dayColumn = [];
 		let dayRow = [];
 		let dayObject = {};
-		let {startDate, untilDate, availableDates, minDate, maxDate, ignoreMinDate} = this.props;
+		let { startDate, untilDate, availableDates, minDate, maxDate, ignoreMinDate } = this.props;
 
-		do{
+		do {
 			dayColumn = [];
-			for(let i = 0; i < 7; i++){
+			for (let i = 0; i < 7; i++) {
 				dayObject = {
-					type : null,
+					type: null,
 					date: null
 				};
-				if(i == currDate.days() && currDate.month() == currMonth)
-				{
-					if(minDate && minDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") < minDate.format("YYYYMMDD")){
-						if(startDate && startDate.format('YYYYMMDD') > currDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") > moment().format("YYYYMMDD") && ignoreMinDate){}
-						else{
+				if (i == currDate.days() && currDate.month() == currMonth) {
+					if (minDate && minDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") < minDate.format("YYYYMMDD")) {
+						if (startDate && startDate.format('YYYYMMDD') > currDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") > moment().format("YYYYMMDD") && ignoreMinDate) { }
+						else {
 							dayObject.type = 'disabled';
 						}
 					}
-					if(maxDate && maxDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") > maxDate.format("YYYYMMDD")){
+					if (maxDate && maxDate.format("YYYYMMDD") && currDate.format("YYYYMMDD") > maxDate.format("YYYYMMDD")) {
 						dayObject.type = 'disabled';
 					}
-					if(availableDates && availableDates.indexOf(currDate.format("YYYYMMDD")) == -1){
+					if (availableDates && availableDates.indexOf(currDate.format("YYYYMMDD")) == -1) {
 						dayObject.type = 'blockout';
 					}
-					if(startDate && startDate.format('YYYYMMDD') == currDate.format('YYYYMMDD')){
-						if(!untilDate)
+					if (startDate && startDate.format('YYYYMMDD') == currDate.format('YYYYMMDD')) {
+						if (!untilDate)
 							dayObject.type = 'single';
-						else{
+						else {
 							dayObject.type = 'first';
 						}
 					}
-					if(untilDate && untilDate.format('YYYYMMDD') == currDate.format('YYYYMMDD')){
+					if (untilDate && untilDate.format('YYYYMMDD') == currDate.format('YYYYMMDD')) {
 						dayObject.type = 'last';
 					}
-					if((startDate && startDate.format('YYYYMMDD') < currDate.format('YYYYMMDD')) && 
+					if ((startDate && startDate.format('YYYYMMDD') < currDate.format('YYYYMMDD')) &&
 						(untilDate && untilDate.format('YYYYMMDD') > currDate.format('YYYYMMDD')))
 						dayObject.type = 'between';
 
@@ -94,10 +93,10 @@ export default class Month extends React.Component {
 					dayColumn.push(dayObject);
 					currDate.add(1, 'day');
 				}
-				else{
-					if(startDate && untilDate &&
+				else {
+					if (startDate && untilDate &&
 						(
-							startDate.format('YYYYMMDD') < currDate.format('YYYYMMDD')  && 
+							startDate.format('YYYYMMDD') < currDate.format('YYYYMMDD') &&
 							untilDate.format('YYYYMMDD') >= currDate.format('YYYYMMDD')
 						)
 					)
@@ -118,12 +117,12 @@ export default class Month extends React.Component {
 		const dayStack = this.getDayStack(moment(month, 'YYYYMM'));
 		return (
 			<View>
-				<Text style={{fontSize: 14, padding: 14}}>{moment(month, 'YYYYMM').format("MMMM YYYY")}</Text>
+				<Text style={{ fontSize: 14, padding: 14, color: this.props.textColor }}>{moment(month, 'YYYYMM').format("MMMM YYYY")}</Text>
 				<View>
 					{
 						dayStack.map((days, i) => {
 							return (
-								<DayRow days={days} dayProps={dayProps} key={i} onSelectDate={this.props.onSelectDate}/>
+								<DayRow days={days} dayProps={dayProps} key={i} onSelectDate={this.props.onSelectDate} textColor={this.props.textColor} />
 							)
 						})
 					}

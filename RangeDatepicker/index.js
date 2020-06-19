@@ -32,9 +32,9 @@ export default class RangeDatepicker extends Component {
     showReset: true,
     showClose: true,
     ignoreMinDate: false,
-    onClose: () => {},
-    onSelect: () => {},
-    onConfirm: () => {},
+    onClose: () => { },
+    onSelect: () => { },
+    onConfirm: () => { },
     placeHolderStart: 'Start Date',
     placeHolderUntil: 'Until Date',
     selectedBackgroundColor: 'green',
@@ -58,6 +58,8 @@ export default class RangeDatepicker extends Component {
     showButton: true,
     monthContainerHeight: DEVICE_WIDTH,
     monthContainerWidth: DEVICE_WIDTH,
+    backgroundColor: '#fff',
+    textColor: '#fff',
   };
 
   static propTypes = {
@@ -89,6 +91,8 @@ export default class RangeDatepicker extends Component {
     showButton: PropTypes.bool,
     monthContainerHeight: PropTypes.number,
     monthContainerWidth: PropTypes.number,
+    backgroundColor: PropTypes.string,
+    textColor: PropTypes.string,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -204,7 +208,7 @@ export default class RangeDatepicker extends Component {
     let { availableDates, startDate, untilDate } = this.state;
 
     if (availableDates && availableDates.length > 0) {
-      availableDates = availableDates.filter(function(d) {
+      availableDates = availableDates.filter(function (d) {
         if (d.indexOf(month) >= 0) return true;
       });
     }
@@ -220,6 +224,7 @@ export default class RangeDatepicker extends Component {
         ignoreMinDate={ignoreMinDate}
         dayProps={{ selectedBackgroundColor, selectedTextColor, todayColor }}
         month={month}
+        textColor={this.props.textColor}
       />
     );
   }
@@ -228,7 +233,7 @@ export default class RangeDatepicker extends Component {
     return (
       <View
         style={{
-          backgroundColor: '#fff',
+          backgroundColor: this.props.backgroundColor,
           zIndex: 1000,
           alignSelf: 'center',
           width: '100%',
@@ -288,7 +293,7 @@ export default class RangeDatepicker extends Component {
         <View style={styles.dayHeader}>
           {this.props.dayHeadings.map((day, i) => {
             return (
-              <Text style={{ width: '14.28%', textAlign: 'center' }} key={i}>
+              <Text style={{ width: '14.28%', textAlign: 'center', color: this.props.textColor }} key={i}>
                 {day}
               </Text>
             );

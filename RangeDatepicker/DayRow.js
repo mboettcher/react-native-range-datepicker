@@ -11,7 +11,7 @@ export default class DayRow extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if(JSON.stringify(nextProps.days) == JSON.stringify(this.props.days))
+		if (JSON.stringify(nextProps.days) == JSON.stringify(this.props.days))
 			return false;
 
 		return true;
@@ -19,11 +19,11 @@ export default class DayRow extends React.Component {
 
 	render() {
 		return (
-			<View style={{ marginBottom: 2, marginTop: 2, flexDirection: 'row', justifyContent: 'space-evenly', flex: 1}}>
+			<View style={{ marginBottom: 2, marginTop: 2, flexDirection: 'row', justifyContent: 'space-evenly', flex: 1 }}>
 				{
 					this.props.days.map((day, i) => {
 						return (
-							<Day key={i} dayProps={this.props.dayProps} onSelectDate={this.props.onSelectDate} day={day}/>
+							<Day key={i} dayProps={this.props.dayProps} onSelectDate={this.props.onSelectDate} day={day} textColor={this.props.textColor} />
 						)
 					})
 				}
