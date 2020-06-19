@@ -95,7 +95,7 @@ export default class RangeDatepicker extends Component {
     textColor: PropTypes.string,
   };
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (JSON.stringify(this.props.availableDates) != JSON.stringify(nextProps.availableDates))
       this.setState({ availableDates: nextProps.availableDates || null });
     if (this.props.startDate != nextProps.startDate)

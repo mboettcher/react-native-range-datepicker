@@ -60,7 +60,7 @@ export default class RangeDatepicker extends Component {
 		infoContainerStyle: PropTypes.object,
 	}
 
-	componentWillReceiveProps(nextProps) {
+	UNSAFE_componentWillReceiveProps(nextProps) {
 		this.setState({availableDates: nextProps.availableDates});
 	}
 
